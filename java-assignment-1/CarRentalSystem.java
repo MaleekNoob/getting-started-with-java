@@ -122,7 +122,7 @@ public class CarRentalSystem {
     
     public void carManagement() {
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        int choice = 0;
 
         while (true) {
             System.out.println("\nCar Management Menu:");
