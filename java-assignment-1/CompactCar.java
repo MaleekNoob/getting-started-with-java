@@ -24,15 +24,37 @@ class CompactCar extends Car implements Insurable {
     // Implement Insurable interface methods
     @Override
     public double calculateInsuranceCost() {
+        if (isInsured) {
+            return base_rent * 0.05;
+        }
         return 0;
     }
 
     @Override
     public double calculateDamageCost(double totalCost) {
+        if (isInsured) {
+            return base_rent * 0.1 + totalCost * 0.05;
+        }
         return 0;
     }
 
+    @Override
+    public double getDistanceTraveled() {
+        return distanceTraveled;
+    }
+
+    @Override
+    public boolean isInsured() {
+        return isInsured;
+    }
+
+    @Override
+    public void setInsured(boolean isInsured) {
+        this.isInsured = isInsured;
+    }
+
     // Method to display car details
+    @Override
     public void displayDetails() {
         System.out.println("Car ID: " + getCarID());
         System.out.println("Brand: " + getBrand());

@@ -327,18 +327,14 @@ public class CarRentalSystem {
                     calculateAndDisplayTotalRentalCost(renterIDCost);
                     break;
                 case 4:
-                    System.out.print("Enter renter ID: ");
-                    int renterIDInsurance = scanner.nextInt();
                     System.out.print("Enter car ID: ");
                     int carIDInsurance = scanner.nextInt();
-                    addInsurance(renterIDInsurance, carIDInsurance);
+                    addInsurance(carIDInsurance);
                     break;
                 case 5:
-                    System.out.print("Enter renter ID: ");
-                    int renterIDDamage = scanner.nextInt();
                     System.out.print("Enter car ID: ");
                     int carIDDamage = scanner.nextInt();
-                    calculateAndDisplayDamageCost(renterIDDamage, carIDDamage);
+                    calculateAndDisplayDamageCost(carIDDamage);
                     break;
                 case 6:
                     return;
@@ -362,39 +358,31 @@ public class CarRentalSystem {
         System.out.println("Renter not found.");
     }
 
-    private void addInsurance(int renterID, int carID) {
-        for (Renter renter : renters) {
-            if (renter.getRenterID() == renterID) {
-                for (Car car : renter.getRentedCars()) {
-                    if (car.getCarID() == carID) {
-                        double insuranceCost = car.calculateInsuranceCost();
-                        System.out.println("Insurance cost for car " + carID + ": " + insuranceCost);
-                        return;
-                    }
+    private void addInsurance(int carID) {
+        for (Car car : cars) {
+            if (car.getCarID() == carID) {
+                if (car.isInsured()) {
+                    System.out.println("Insurance already added.");
+                    return;
                 }
-                System.out.println("Car not found.");
+                car.setInsured(true);
+                System.out.println("Insurance added successfully.");
                 return;
             }
         }
-        System.out.println("Renter not found.");
+        System.out.println("Car not found.");
     }
 
-    private void calculateAndDisplayDamageCost(int renterID, int carID) {
-        for (Renter renter : renters) {
-            if (renter.getRenterID() == renterID) {
-                for (Car car : renter.getRentedCars()) {
-                    if (car.getCarID() == carID) {
-                        double totalCost = car.calculateRentalCost();
-                        double damageCost = car.calculateDamageCost(totalCost);
-                        System.out.println("Damage cost for car " + carID + ": " + damageCost);
-                        return;
-                    }
-                }
-                System.out.println("Car not found.");
+    private void calculateAndDisplayDamageCost(int carID) {
+        for (Car car : cars) {
+            if (car.getCarID() == carID) {
+                double totalCost = car.calculateRentalCost();
+                double damageCost = car.calculateDamageCost(totalCost);
+                System.out.println("Damage cost for car " + carID + ": " + damageCost);
                 return;
             }
         }
-        System.out.println("Renter not found.");
+        System.out.println("Car not found.");
     }
 
 }

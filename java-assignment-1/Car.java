@@ -28,6 +28,14 @@ public abstract class Car implements Insurable {
 
     public abstract void setDistanceTraveled(double distance);
 
+    public abstract double getDistanceTraveled();
+
+    public abstract boolean isInsured();
+
+    public abstract void setInsured(boolean isInsured);
+
+    public abstract void displayDetails();
+
     // Getter methods
 
     public int getCarID() {

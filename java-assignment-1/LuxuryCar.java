@@ -24,16 +24,38 @@ class LuxuryCar extends Car implements Insurable {
     // Fixed percentage of the base rent
     @Override
     public double calculateInsuranceCost() {
-        return base_rent * 0.15 /* insurance cost */;
+        if (isInsured) {
+            return base_rent * 0.15 /* insurance cost */;
+        }
+        return 0.0;
     }
 
     // Percentage of the total cost including luxury tax
     @Override
     public double calculateDamageCost(double totalCost) {
+        if (!isInsured) {
+            return 0.0;
+        }
         return totalCost * 0.2 /* damage cost */ + 100.0 /* luxury tax */;
     }
 
+    @Override
+    public double getDistanceTraveled() {
+        return distanceTraveled;
+    }
+
+    @Override
+    public boolean isInsured() {
+        return isInsured;
+    }
+
+    @Override
+    public void setInsured(boolean isInsured) {
+        this.isInsured = isInsured;
+    }
+
     // Method to display car details
+    @Override
     public void displayDetails() {
         System.out.println("Car ID: " + getCarID());
         System.out.println("Brand: " + getBrand());

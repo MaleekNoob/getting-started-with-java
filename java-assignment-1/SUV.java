@@ -24,15 +24,37 @@ class SUV extends Car implements Insurable {
     // Implement Insurable interface methods
     @Override
     public double calculateInsuranceCost() {
-        return base_rent * 0.1;
+        if (isInsured) {
+            return base_rent * 0.1;
+        }
+        return 0.0;
     }
 
     @Override
     public double calculateDamageCost(double totalCost) {
+        if (!isInsured) {
+            return 0.0;
+        }
         return base_rent * 0.2 + totalCost * 0.1;
     }
 
+    @Override
+    public double getDistanceTraveled() {
+        return distanceTraveled;
+    }
+
+    @Override
+    public boolean isInsured() {
+        return isInsured;
+    }
+
+    @Override
+    public void setInsured(boolean isInsured) {
+        this.isInsured = isInsured;
+    }
+
     // Method to display car details
+    @Override
     public void displayDetails() {
         System.out.println("Car ID: " + getCarID());
         System.out.println("Brand: " + getBrand());
