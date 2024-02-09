@@ -63,7 +63,7 @@ class Renter {
     }
 
     // Method to display renter details
-    public void displayRenterDetails() {
+    public void displayDetails() {
         System.out.println("Renter ID: " + renterID);
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);

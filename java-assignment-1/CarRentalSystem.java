@@ -50,7 +50,7 @@ public class CarRentalSystem {
     public void displayRenterDetails(int renterID) {
         for (Renter renter : renters) {
             if (renter.getRenterID() == renterID) {
-                renter.displayRenterDetails();
+                renter.displayDetails();
                 return;
             }
         }
@@ -61,6 +61,10 @@ public class CarRentalSystem {
     public void removeRenter(int renterID) {
         for (Renter renter : renters) {
             if (renter.getRenterID() == renterID) {
+                if (renter.getRentedCars().size() > 0) {
+                    System.out.println("Renter has not returned the car yet. Unable to remove.");
+                    return;
+                }
                 renters.remove(renter);
                 System.out.println("Renter removed successfully.");
                 return;
@@ -71,14 +75,46 @@ public class CarRentalSystem {
 
     // Method to rent a car to a renter
     public void rentCar(int renterID, int carID, double distanceTraveled) {
-        // Implementation of rent transaction
-        // ...
+        Car carToRent = null;
+        for (Car car : cars) {
+            if (car.getCarID() == carID && !car.isRentalStatus()) {
+                carToRent = car;
+                break;
+            }
+        }
+        if (carToRent == null) {
+            System.out.println("Car not found or currently rented. Unable to rent.");
+            return;
+        }
+        for (Renter renter : renters) {
+            if (renter.getRenterID() == renterID) {
+                renter.addRentedCar(carToRent);
+                carToRent.setRentalStatus(true);
+                carToRent.setDistanceTraveled(distanceTraveled);
+                System.out.println("Car rented successfully.");
+                return;
+            }
+        }
+        System.out.println("Renter not found. Unable to rent.");
     }
 
     // Method to display rental details
     public void displayRentalDetails(int renterID) {
-        // Implementation of displaying rental details
-        // ...
+        for (Renter renter : renters) {
+            if (renter.getRenterID() == renterID) {
+                renter.displayDetails();
+                return;
+            }
+        }
+        System.out.println("Renter not found.");
+    }
+
+    // Method to display rental details of all renters
+    public void displayRentalDetails() {
+        for (Renter renter : renters) {
+            renter.displayDetails();
+            System.out.println();
+        }
     }
 
     // Main method to test the system
@@ -186,6 +222,179 @@ public class CarRentalSystem {
                     System.out.println("Invalid choice. Please enter a number between 1 and 4.");
             }
         }
+    }
+
+    public void renterManagement() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+
+        while (true) {
+            System.out.println("\nRenter management menu:");
+            System.out.println("1. Add new renters");
+            System.out.println("2. Display renter details");
+            System.out.println("3. Remove a renter after they return the car");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter renter details:");
+                    int renterType = 0;
+                    while (renterType < 1 || renterType > 3) {
+                        System.out.println("Enter renter type (1. Regular, 2. Frequent, 3. Corporate): ");
+                        renterType = scanner.nextInt();
+                    }
+                    System.out.print("Enter renter ID: ");
+                    int renterID = scanner.nextInt();
+                    System.out.print("Enter name: ");
+                    String name = scanner.next();
+                    System.out.print("Enter email: ");
+                    String email = scanner.next();
+                    System.out.print("Enter phone number: ");
+                    String phoneNumber = scanner.next();
+                    System.out.print("Enter address: ");
+                    String address = scanner.next();
+                    // Create a new renter object based on the renter type
+                    Renter renter;
+                    switch (renterType) {
+                        case 1:
+                            renter = new RegularRenter(renterID, name, email, phoneNumber, address);
+                            break;
+                        case 2:
+                            renter = new FrequentRenter(renterID, name, email, phoneNumber, address);
+                            break;
+                        case 3:
+                            renter = new CorporateRenter(renterID, name, email, phoneNumber, address);
+                            break;
+                        default:
+                            System.out.println("Invalid renter type. Please enter a number between 1 and 3.");
+                            continue;
+                    }
+                    // Add the renter to the system
+                    addRenter(renter);
+                    break;
+                case 2:
+                    System.out.print("Enter renter ID to display details: ");
+                    int renterIdNumber = scanner.nextInt();
+                    displayRentalDetails(renterIdNumber);
+                    break;
+                case 3:
+                    System.out.print("Enter renter ID to remove: ");
+                    int removeRenterId = scanner.nextInt();
+                    removeRenter(removeRenterId);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    public void rentTransactions() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+
+        while (true) {
+            System.out.println("\nRent Transactions Menu:");
+            System.out.println("1. Rent a car to a renter");
+            System.out.println("2. Display rental details");
+            System.out.println("3. Calculate and display the total rental cost");
+            System.out.println("4. Add insurance");
+            System.out.println("5. Calculate and display damage cost");
+            System.out.println("6. Return to main menu");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter renter ID: ");
+                    int renterID = scanner.nextInt();
+                    System.out.print("Enter car ID: ");
+                    int carID = scanner.nextInt();
+                    System.out.print("Enter distance traveled: ");
+                    double distanceTraveled = scanner.nextDouble();
+                    rentCar(renterID, carID, distanceTraveled);
+                    break;
+                case 2:
+                    displayRentalDetails();
+                    break;
+                case 3:
+                    System.out.print("Enter renter ID: ");
+                    int renterIDCost = scanner.nextInt();
+                    calculateAndDisplayTotalRentalCost(renterIDCost);
+                    break;
+                case 4:
+                    System.out.print("Enter renter ID: ");
+                    int renterIDInsurance = scanner.nextInt();
+                    System.out.print("Enter car ID: ");
+                    int carIDInsurance = scanner.nextInt();
+                    addInsurance(renterIDInsurance, carIDInsurance);
+                    break;
+                case 5:
+                    System.out.print("Enter renter ID: ");
+                    int renterIDDamage = scanner.nextInt();
+                    System.out.print("Enter car ID: ");
+                    int carIDDamage = scanner.nextInt();
+                    calculateAndDisplayDamageCost(renterIDDamage, carIDDamage);
+                    break;
+                case 6:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+            }
+        }
+    }
+
+    private void calculateAndDisplayTotalRentalCost(int renterID) {
+        for (Renter renter : renters) {
+            if (renter.getRenterID() == renterID) {
+                double totalCost = 0.0;
+                for (Car car : renter.getRentedCars()) {
+                    totalCost += car.calculateRentalCost();
+                }
+                System.out.println("Total rental cost for renter " + renterID + ": " + totalCost);
+                return;
+            }
+        }
+        System.out.println("Renter not found.");
+    }
+
+    private void addInsurance(int renterID, int carID) {
+        for (Renter renter : renters) {
+            if (renter.getRenterID() == renterID) {
+                for (Car car : renter.getRentedCars()) {
+                    if (car.getCarID() == carID) {
+                        double insuranceCost = car.calculateInsuranceCost();
+                        System.out.println("Insurance cost for car " + carID + ": " + insuranceCost);
+                        return;
+                    }
+                }
+                System.out.println("Car not found.");
+                return;
+            }
+        }
+        System.out.println("Renter not found.");
+    }
+
+    private void calculateAndDisplayDamageCost(int renterID, int carID) {
+        for (Renter renter : renters) {
+            if (renter.getRenterID() == renterID) {
+                for (Car car : renter.getRentedCars()) {
+                    if (car.getCarID() == carID) {
+                        double totalCost = car.calculateRentalCost();
+                        double damageCost = car.calculateDamageCost(totalCost);
+                        System.out.println("Damage cost for car " + carID + ": " + damageCost);
+                        return;
+                    }
+                }
+                System.out.println("Car not found.");
+                return;
+            }
+        }
+        System.out.println("Renter not found.");
     }
 
 }

@@ -21,10 +21,10 @@ public class Main {
                     carRentalSystem.carManagement();
                     break;
                 case 2:
-                    renterManagement();
+                    carRentalSystem.renterManagement();
                     break;
                 case 3:
-                    rentTransactions();
+                    carRentalSystem.rentTransactions();
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -35,19 +35,4 @@ public class Main {
         } while (choice != 4);
     }
 
-    private static void renterManagement() {
-        // Add new renters of different types
-        // Display renter details
-        // Remove a renter after they return the car
-    }
-
-    private static void rentTransactions() {
-        // Rent a car to a renter
-        // Display rental details
-        // Calculate and display the total rental cost
-        // Provide an option to add insurance if the rented car is insurable
-        // If insurance is added, calculate and include insurance cost in the total
-        // Calculate and display damage cost based on the car type and insurance status upon return
-        // All rent transactions are stored in CRMS
-    }
 }

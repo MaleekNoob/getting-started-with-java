@@ -1,14 +1,14 @@
-// Derived class for RegularRenter
-class RegularRenter extends Renter {
+// Derived class for FrequentRenter
+class FrequentRenter extends Renter {
     boolean loyaltyProgram;
     boolean specialOffers;
     String description;
 
-    public RegularRenter(int renterID, String name, String email, String phoneNumber, String address) {
+    public FrequentRenter(int renterID, String name, String email, String phoneNumber, String address) {
         super(renterID, name, email, phoneNumber, address);
-        loyaltyProgram = false;
+        loyaltyProgram = true;
         specialOffers = false;
-        description = "Regular Renter";
+        description = "Frequent Renter";
     }
 
     @Override

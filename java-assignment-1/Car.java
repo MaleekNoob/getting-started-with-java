@@ -1,5 +1,5 @@
 // Base class for Car
-public abstract class Car {
+public abstract class Car implements Insurable {
     private int carID;
     private String brand;
     private String model;
@@ -20,7 +20,13 @@ public abstract class Car {
     }
 
     // Abstract method for calculating rental cost
-    public abstract double calculateRentalCost(double distanceTraveled);
+    public abstract double calculateRentalCost();
+
+    public abstract double calculateInsuranceCost();
+
+    public abstract double calculateDamageCost(double totalCost);
+
+    public abstract void setDistanceTraveled(double distance);
 
     // Getter methods
 

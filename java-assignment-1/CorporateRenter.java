@@ -1,14 +1,14 @@
-// Derived class for RegularRenter
-class RegularRenter extends Renter {
+// Derived class for CorporateRenter
+class CorporateRenter extends Renter {
     boolean loyaltyProgram;
     boolean specialOffers;
     String description;
 
-    public RegularRenter(int renterID, String name, String email, String phoneNumber, String address) {
+    public CorporateRenter(int renterID, String name, String email, String phoneNumber, String address) {
         super(renterID, name, email, phoneNumber, address);
-        loyaltyProgram = false;
-        specialOffers = false;
-        description = "Regular Renter";
+        loyaltyProgram = true;
+        specialOffers = true;
+        description = "Corporate Renter";
     }
 
     @Override
@@ -23,6 +23,11 @@ class RegularRenter extends Renter {
             System.out.println("Eligible for Loyalty Program");
         } else {
             System.out.println("Not eligible for Loyalty Program");
+        }
+        if (specialOffers) {
+            System.out.println("Eligible for Special Offers");
+        } else {
+            System.out.println("Not eligible for Special Offers");
         }
     }
 }
