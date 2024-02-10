@@ -34,9 +34,9 @@ class LuxuryCar extends Car implements Insurable {
     @Override
     public double calculateDamageCost(double totalCost) {
         if (!isInsured) {
-            return 0.0;
+            return totalCost * 0.2 /* damage cost */ + 100.0 /* luxury tax */;
         }
-        return totalCost * 0.2 /* damage cost */ + 100.0 /* luxury tax */;
+        return 0.0;
     }
 
     @Override
@@ -65,6 +65,12 @@ class LuxuryCar extends Car implements Insurable {
         System.out.println("Car Type: " + carType);
         System.out.println("Description: " + description);
         System.out.println("Rental Fee: " + calculateRentalCost());
+        if (isInsured) {
+            System.out.println("Insurance Cost: " + calculateInsuranceCost());
+        }
+        else {
+            System.out.println("Damage Cost: " + calculateDamageCost(calculateRentalCost()));
+        }
     }
 
     // Method to set distance traveled

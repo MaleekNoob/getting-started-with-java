@@ -32,7 +32,7 @@ class CompactCar extends Car implements Insurable {
 
     @Override
     public double calculateDamageCost(double totalCost) {
-        if (isInsured) {
+        if (!isInsured) {
             return base_rent * 0.1 + totalCost * 0.05;
         }
         return 0;
@@ -64,6 +64,12 @@ class CompactCar extends Car implements Insurable {
         System.out.println("Car Type: " + carType);
         System.out.println("Description: " + description);
         System.out.println("Rental Fee: " + calculateRentalCost());
+        if (isInsured) {
+            System.out.println("Insurance Cost: " + calculateInsuranceCost());
+        }
+        else {
+            System.out.println("Damage Cost: " + calculateDamageCost(calculateRentalCost()));
+        }
     }
 
     // Method to set distance traveled

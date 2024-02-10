@@ -376,6 +376,12 @@ public class CarRentalSystem {
     private void calculateAndDisplayDamageCost(int carID) {
         for (Car car : cars) {
             if (car.getCarID() == carID) {
+                if (car.isInsured()) {
+                    // calculate insurance cost
+                    double insuranceCost = car.calculateInsuranceCost();
+                    System.out.println("Insurance cost for car " + carID + ": " + insuranceCost);
+                    return;
+                }
                 double totalCost = car.calculateRentalCost();
                 double damageCost = car.calculateDamageCost(totalCost);
                 System.out.println("Damage cost for car " + carID + ": " + damageCost);
