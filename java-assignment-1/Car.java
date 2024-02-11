@@ -1,5 +1,5 @@
 // Base class for Car
-public abstract class Car implements Insurable {
+public abstract class Car {
     private int carID;
     private String brand;
     private String model;

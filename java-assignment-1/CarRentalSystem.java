@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 // Class for CarRentalSystem
 public class CarRentalSystem {
+
     private List<Car> cars;
     private List<Renter> renters;
 
@@ -134,9 +135,9 @@ public class CarRentalSystem {
         carRentalSystem.displayAvailableCars();
 
         // Create and add renters to the system
-        Renter regularRenter = new RegularRenter(101, "John Doe", "john@example.com", "1234567890", "123 Main St");
-        Renter frequentRenter = new FrequentRenter(102, "Jane Doe", "jane@example.com", "9876543210", "456 Oak St");
-        Renter corporateRenter = new CorporateRenter(103, "ABC Corp", "info@abccorp.com", "5555555555", "789 Maple St");
+        Renter regularRenter = new RegularRenter(101, "Amaar Ali Jan", "amaar.ali.jan@hkp.com", "1234567890", "lahore");
+        Renter frequentRenter = new FrequentRenter(102, "Taimoor Rehman", "taimoor.rehman@mkp.com", "9876543210", "lahore");
+        Renter corporateRenter = new CorporateRenter(103, "Ali Sajjed", "ali.sajjed@awp.com", "5555555555", "Islamabad");
 
         carRentalSystem.addRenter(regularRenter);
         carRentalSystem.addRenter(frequentRenter);

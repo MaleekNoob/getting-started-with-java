@@ -1,5 +1,5 @@
 // Class for CompactCar
-class CompactCar extends Car implements Insurable {
+class CompactCar extends Car {
     String carType;
     String description;
     Double base_rent;
