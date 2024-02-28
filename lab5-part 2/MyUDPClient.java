@@ -3,7 +3,6 @@ import java.net.*;
 class MyUDPClient {
     public static void main(String args[]) {
         try {
-            // Create multiple clients to test the functionality
             for (int i = 0; i < 5; i++) {
                 new Thread(() -> sendRequest()).start();
             }
@@ -18,7 +17,6 @@ class MyUDPClient {
         try {
             socket = new DatagramSocket();
 
-            // Send a request to the server to get the current time
             String request = "getTime";
             byte[] sendData = request.getBytes();
             InetAddress serverAddress = InetAddress.getByName("localhost");
@@ -27,7 +25,6 @@ class MyUDPClient {
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverAddress, serverPort);
             socket.send(sendPacket);
 
-            // Receive the server's response
             byte[] receiveData = new byte[1024];
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             socket.receive(receivePacket);

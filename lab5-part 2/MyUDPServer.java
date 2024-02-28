@@ -18,7 +18,6 @@ class MyUDPServer {
                 String clientRequest = new String(receivePacket.getData(), 0, receivePacket.getLength());
 
                 if (clientRequest.equals("getTime")) {
-                    // Create a new thread to handle the client request
                     new Thread(new ClientHandler(socket, receivePacket)).start();
                 }
             }
@@ -48,7 +47,6 @@ class MyUDPServer {
         @Override
         public void run() {
             try {
-                // Respond to the client with the current server time
                 String serverTime = getCurrentTime();
                 InetAddress clientAddress = receivePacket.getAddress();
                 int clientPort = receivePacket.getPort();

@@ -9,14 +9,11 @@ class MyFileClient {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        // Enter the file path to be sent
         System.out.print("Enter the file path to be sent: ");
         String filePath = bufferedReader.readLine();
 
-        // Open FileInputStream to read the file
         FileInputStream fileInputStream = new FileInputStream(filePath);
 
-        // Send file details (name and size)
         File file = new File(filePath);
         dataOut.writeUTF(file.getName());
         dataOut.writeLong(file.length());
@@ -24,7 +21,6 @@ class MyFileClient {
 
         System.out.println("Sending file: " + file.getName());
 
-        // Send file content
         byte[] buffer = new byte[1024];
         int bytesRead;
 
@@ -33,7 +29,6 @@ class MyFileClient {
             dataOut.flush();
         }
 
-        // Close streams
         fileInputStream.close();
         dataOut.close();
         s.close();
