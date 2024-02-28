@@ -1,6 +1,4 @@
 import java.net.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 class i221526_Q4_File1 {
     public static void main(String args[]) {
@@ -18,7 +16,7 @@ class i221526_Q4_File1 {
                 String clientRequest = new String(receivePacket.getData(), 0, receivePacket.getLength());
 
                 if (clientRequest.equals("getTime")) {
-                    new Thread(new ClientHandler(socket, receivePacket)).start();
+                    new Thread(new i221526_Q4_File3(socket, receivePacket)).start();
                 }
             }
         } catch (Exception e) {
@@ -30,33 +28,4 @@ class i221526_Q4_File1 {
         }
     }
 
-    private static String getCurrentTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return dateFormat.format(new Date());
-    }
-
-    private static class ClientHandler implements Runnable {
-        private DatagramSocket socket;
-        private DatagramPacket receivePacket;
-
-        public ClientHandler(DatagramSocket socket, DatagramPacket receivePacket) {
-            this.socket = socket;
-            this.receivePacket = receivePacket;
-        }
-
-        @Override
-        public void run() {
-            try {
-                String serverTime = getCurrentTime();
-                InetAddress clientAddress = receivePacket.getAddress();
-                int clientPort = receivePacket.getPort();
-                byte[] sendData = serverTime.getBytes();
-
-                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, clientAddress, clientPort);
-                socket.send(sendPacket);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
