@@ -2,7 +2,7 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class MyUDPServer {
+class i221526_Q4_File1 {
     public static void main(String args[]) {
         DatagramSocket socket = null;
 

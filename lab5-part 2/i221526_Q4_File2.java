@@ -1,6 +1,6 @@
 import java.net.*;
 
-class MyUDPClient {
+class i221526_Q4_File2 {
     public static void main(String args[]) {
         try {
             for (int i = 0; i < 5; i++) {
